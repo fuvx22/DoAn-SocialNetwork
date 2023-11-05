@@ -1,5 +1,9 @@
 package model;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import data_access.taiKhoanDAO;
+
 public class taiKhoan {
 	private int id;
 	private String taiKhoan;
@@ -11,7 +15,7 @@ public class taiKhoan {
 	private String email;
 	private String soDienThoai;
 	private String status;
-
+	private static taiKhoanDAO taiKhoanDAO = new taiKhoanDAO();
 
 	public taiKhoan(int id, String taiKhoan, String matKhau, String anhDaiDien, String hoTen, boolean gioiTinh,
 			String diaChi, String email, String soDienThoai, String status) {
@@ -36,6 +40,24 @@ public class taiKhoan {
 		this.hoTen = hoTen;
 		this.gioiTinh = gioiTinh;
 		this.email = email;
+	}
+	
+	public taiKhoan(int id, String taiKhoan, String anhDaiDien, String hoTen, boolean gioiTinh,
+			String diaChi, String email, String soDienThoai, String status) {
+		super();
+		this.id = id;
+		this.taiKhoan = taiKhoan;
+		this.anhDaiDien = anhDaiDien;
+		this.hoTen = hoTen;
+		this.gioiTinh = gioiTinh;
+		this.diaChi = diaChi;
+		this.email = email;
+		this.soDienThoai = soDienThoai;
+		this.status = status;
+	}
+
+	public taiKhoan() {
+		// TODO Auto-generated constructor stub
 	}
 
 	public int getId() {
@@ -118,5 +140,44 @@ public class taiKhoan {
 		this.gioiTinh = gioiTinh;
 	}
 	
+	private static String sha256Hash(String input) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            byte[] hashBytes = md.digest(input.getBytes());
+
+            // Chuyển mảng byte thành chuỗi hex
+            StringBuilder hexString = new StringBuilder();
+            for (byte b : hashBytes) {
+                String hex = Integer.toHexString(0xff & b);
+                if (hex.length() == 1) {
+                    hexString.append('0');
+                }
+                hexString.append(hex);
+            }
+            return hexString.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 	
+	public static taiKhoan authenticateUser(String taiKhoan, String matKhau) {	
+		
+		String hashMatKhau = sha256Hash(matKhau);
+		
+		taiKhoan result = taiKhoanDAO.selectByUserNamePassword(taiKhoan, hashMatKhau);
+			
+		return result;
+		
+	}
+	
+	public static boolean createNewUser(taiKhoan newUser) {
+		
+		String hashMatKhau = sha256Hash(newUser.getMatKhau());
+		newUser.setMatKhau(hashMatKhau);
+		
+		boolean result = taiKhoanDAO.insert(newUser);
+		
+		return result;
+	}
 }

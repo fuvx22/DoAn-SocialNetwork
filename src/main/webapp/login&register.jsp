@@ -11,15 +11,10 @@
 	<title>Winku Social Network Toolkit</title>
     <link rel="icon" href="images/fav.png" type="image/png" sizes="16x16"> 
 
-
-
-
-
-
-	<link rel="stylesheet" href="css/main.min.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/color.css">
-    <link rel="stylesheet" href="css/responsive.css">
+	<link rel="stylesheet" type="text/css" href="css/main.min.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/color.css">
+    <link rel="stylesheet" type="text/css" href="css/responsive.css">
 </head>
 <body>
 <!--<div class="se-pre-con"></div>-->
@@ -42,16 +37,21 @@
 				<div class="login-reg-bg">
 					<div class="log-reg-area sign">
 						<h2 class="log-title">Login</h2>
+						
+						<h5 class="log-title mt-3 " style="color:red"><%=(session.getAttribute("loginMessage") != null) ? session.getAttribute("loginMessage") : "" %></h5>
 							
 						<form method="post" action="/DoAn-SocialNetwork/controller/login-servlet">
 							<div class="form-group">	
-							  <input type="text" id="input" required="required"/>
-							  <label class="control-label" for="input" name="username">Username</label><i class="mtrl-select"></i>
+							  <input type="text" id="input" required="required" name="username"/>
+							  <label class="control-label" for="input" >Username</label><i class="mtrl-select"></i>
 							</div>
 							<div class="form-group">	
-							  <input type="password" required="required"/>
-							  <label class="control-label" for="input" name="password">Password</label><i class="mtrl-select"></i>
+							  <input type="password" required="required" name="password"/>
+							  <label class="control-label" for="input" >Password</label><i class="mtrl-select"></i>
 							</div>
+						
+							  
+						
 							<div class="checkbox">
 							  <label>
 								<input type="checkbox" checked="checked"/><i class="check-box"></i>Always Remember Me.
@@ -67,7 +67,7 @@
 					<div class="log-reg-area reg">
 						<h2 class="log-title">Register</h2>
 						<form method="post">
-							<div class="form-group">	
+							<div class="form-group">		
 							  <input type="text" required="required"/>
 							  <label class="control-label" for="input">First & Last Name</label><i class="mtrl-select"></i>
 							</div>
