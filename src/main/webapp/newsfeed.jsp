@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,13 +13,20 @@
 	<title>Winku Social Network Toolkit</title>
     <link rel="icon" href="images/fav.png" type="image/png" sizes="16x16"> 
     
-    <link rel="stylesheet" href="css/main.min.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/color.css">
-    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/color.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/responsive.css">
     
 </head>
+
 <body>
+	<!-- Xử lý check trạng thái đăng nhập -->
+	<c:if test="${empty sessionScope.loginStatus}">
+ 		<c:redirect url = "login&register.jsp"/>
+	</c:if>
+	
+	
 	<div class="theme-layout">
 	
 	<div class="responsive-header">
@@ -191,14 +200,24 @@
 				</li>
 				
 			</ul>
+			
 			<div class="user-img">
-				<img src="images/resources/admin.jpg" alt="">
+				<c:set var="avatar" value="${sessionScope.loggedInUser.getAnhDaiDien()}" />
+				<img src="${avatar}" alt="nothing" width="60px" height="60px"> 
+				<!-- <img src="images/resources/admin.jpg" alt=""> -->
 				<span class="status f-online"></span>
 				<div class="user-setting" style="left: -80px; width: 150px">
-					<a href="#" title=""><i class="ti-user"></i> view profile</a>
-					<a href="#" title=""><i class="ti-pencil-alt"></i>edit profile</a>
-					<a href="#" title=""><i class="ti-lock"></i>edit password</a>
-					<a href="#" title=""><i class="ti-power-off"></i>log out</a>
+						<script> 
+							// Định nghĩa hàm redirect
+							function redirect(url) {
+								window.location.href = url;
+								
+							}
+						</script>
+					<a href="my-page.jsp" title=""><i class="ti-user"></i> view profile</a>
+					<a href="edit-profile.jsp" title=""><i class="ti-pencil-alt"></i>edit profile</a>
+					<a href="edit-password.jsp" title=""><i class="ti-lock"></i>edit password</a>
+					<a href="#" title="" onclick="redirect('/DoAn-SocialNetwork/controller/logout-servlet')" ><i class="ti-power-off"></i>log out</a>
 				</div>
 			</div>
 			
@@ -1119,8 +1138,8 @@
 			
 	
 	<script data-cfasync="false" src="../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="js/main.min.js"></script>
-	<script src="js/script.js"></script>
-	<script src="js/map-init.js"></script>
+	<script src="${pageContext.request.contextPath}/js/script.js"></script>
+	<script src="${pageContext.request.contextPath}/js/map-init.js"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8c55_YHLvDHGACkQscgbGLtLRdxBDCfI"></script>
 </body>
 </html>

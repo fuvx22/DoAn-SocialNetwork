@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+   <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,6 +32,8 @@
 <%
 String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
 %>
+
+
 <!--<div class="se-pre-con"></div>-->
 <div class="theme-layout">
 	<div class="container-fluid pdng0">
@@ -52,7 +55,7 @@ String url = request.getScheme() + "://" + request.getServerName() + ":" + reque
 				<div class="login-reg-bg <%= (request.getAttribute("show") != null)?request.getAttribute("show")+"":""%>">
 					<div class="log-reg-area sign">
 						<h2 class="log-title">Login</h2>
-						
+						<h2><%=(session.getAttribute("loginStatus"))%></h2>
 						<h5 class="log-title mt-3 " style="color:red"><%=(session.getAttribute("loginMessage") != null) ? session.getAttribute("loginMessage") : "" %></h5>
 							
 						<form method="post" action="/DoAn-SocialNetwork/controller/login-servlet">
@@ -84,6 +87,7 @@ String url = request.getScheme() + "://" + request.getServerName() + ":" + reque
 					<div class="log-reg-area reg">
 						<h2 class="log-title">Register</h2>
 						<h5 class="log-title mt-3 " style="color:red"><%= (request.getAttribute("thongBao") != null)?request.getAttribute("thongBao")+"":"" %></h5>
+						<h5 class="log-title mt-3 " style="color:green"><%= (request.getAttribute("thongBao2") != null)?request.getAttribute("thongBao2")+"":"" %></h5>
 						<form method="post" action="<%=url %>/controller/register-servlet">
 							<div class="form-group">		
 							  <input type="text" required="required" name="fullname"/>

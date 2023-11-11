@@ -62,13 +62,15 @@ public class RegisterServlet extends HttpServlet {
 		// create new user and insert new user to db
 		
 		taiKhoan tk = new taiKhoan(0, username, MaHoa.sha256Hash(password), fullname, gender, email);
+		tk.setAnhDaiDien(request.getContextPath()+"/images/avatar-resource/default-avatar.png");
+		System.out.println(tk.getAnhDaiDien());
 		taiKhoanDAO tkDao = new taiKhoanDAO();
 		
 		if (tkDao.checkTaiKhoanIfExist(username)) {
 			tkDao.insert(tk);
 			thongBao = "Đăng ký tài khoản thành công!";
 			
-			request.setAttribute("thongBao", thongBao);
+			request.setAttribute("thongBao2", thongBao);
 			request.setAttribute("show", "show");
 			request.getRequestDispatcher("/login&register.jsp").forward(request, response);
 			//response.sendRedirect(request.getContextPath() + "/login&register.jsp");

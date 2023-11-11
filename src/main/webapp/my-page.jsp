@@ -194,9 +194,9 @@
 				<img src="images/resources/admin.jpg" alt="">
 				<span class="status f-online"></span>
 				<div class="user-setting" style="left: -80px; width: 150px">
-					<a href="#" title=""><i class="ti-user"></i> view profile</a>
-					<a href="#" title=""><i class="ti-pencil-alt"></i>edit profile</a>
-					<a href="#" title=""><i class="ti-lock"></i>edit password</a>
+					<a href="my-page.jsp" title=""><i class="ti-user"></i> view profile</a>
+					<a href="edit-profile.jsp" title=""><i class="ti-pencil-alt"></i>edit profile</a>
+					<a href="edit-password.jsp" title=""><i class="ti-lock"></i>edit password</a>
 					<a href="#" title=""><i class="ti-power-off"></i>log out</a>
 				</div>
 			</div>

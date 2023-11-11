@@ -40,18 +40,19 @@ public class taiKhoanDAO implements IDataAccess<taiKhoan> {
 		Connection con = JDBCUtil.getConnection();
 		
 		try {
-			String sql = "INSERT INTO `dbmangxahoi`.`taikhoan` (`taiKhoan`, `matKhau`, `hoTen`, `diaChi`, `email`, `soDienThoai`, `gioiTinh`) "
-					+ "VALUES (?, ?, ?, ?, ?, ?, ?)";
+			String sql = "INSERT INTO `dbmangxahoi`.`taikhoan` (`taiKhoan`, `matKhau`,`anhDaiDien`, `hoTen`, `diaChi`, `email`, `soDienThoai`, `gioiTinh`) "
+					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 			
 			PreparedStatement st = con.prepareStatement(sql);
 			
 			st.setString(1, t.getTaiKhoan());
 			st.setString(2, t.getMatKhau());
-			st.setString(3, t.getHoTen());			
-			st.setString(4, t.getDiaChi());			
-			st.setString(5, t.getEmail());			
-			st.setString(6, t.getSoDienThoai());			
-			st.setBoolean(7, t.isGioiTinh());	
+			st.setString(3, t.getAnhDaiDien().trim());
+			st.setString(4, t.getHoTen());			
+			st.setString(5, t.getDiaChi());			
+			st.setString(6, t.getEmail());			
+			st.setString(7, t.getSoDienThoai());			
+			st.setBoolean(8, t.isGioiTinh());	
 			
 			st.executeUpdate();
 			
@@ -164,11 +165,21 @@ public class taiKhoanDAO implements IDataAccess<taiKhoan> {
 	
 	
 	public static void main(String[] args) {
-		taiKhoanDAO tkdao = new taiKhoanDAO();
-		System.out.println(tkdao.checkTaiKhoanIfExist("ngocph"));
+		 String yourString = "/DoAn-SocialNetwork/images/avatar-resource/default-avatar.png";
+
+	        if (containsSpecialCharacter(yourString)) {
+	            System.out.println("Chuỗi có ký tự đặc biệt.");
+	        } else {
+	            System.out.println("Chuỗi không có ký tự đặc biệt.");
+	        }
+	    }
+
+	    public static boolean containsSpecialCharacter(String str) {
+	        // Sử dụng regex để kiểm tra xem có ký tự đặc biệt nào trong chuỗi không
+	        return !str.matches("[a-zA-Z0-9-_./]+");
+	    }
 		
 		
 		
-		
-	}
+	
 }
