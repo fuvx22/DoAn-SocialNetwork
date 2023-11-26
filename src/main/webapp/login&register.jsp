@@ -29,9 +29,13 @@
     </style>
 </head>
 <body>
+
 <%
 String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
 %>
+<c:if test="${sessionScope.loginStatus == true}">
+    <c:redirect url="newsfeed.jsp"></c:redirect>
+</c:if>
 
 
 <!--<div class="se-pre-con"></div>-->
@@ -55,7 +59,7 @@ String url = request.getScheme() + "://" + request.getServerName() + ":" + reque
 				<div class="login-reg-bg <%= (request.getAttribute("show") != null)?request.getAttribute("show")+"":""%>">
 					<div class="log-reg-area sign">
 						<h2 class="log-title">Login</h2>
-						<h2><%=(session.getAttribute("loginStatus"))%></h2>
+						
 						<h5 class="log-title mt-3 " style="color:red"><%=(session.getAttribute("loginMessage") != null) ? session.getAttribute("loginMessage") : "" %></h5>
 							
 						<form method="post" action="/DoAn-SocialNetwork/controller/login-servlet">

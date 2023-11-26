@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,13 +11,29 @@
 	<title>Winku Social Network Toolkit</title>
     <link rel="icon" href="images/fav.png" type="image/png" sizes="16x16"> 
     
-    <link rel="stylesheet" href="css/main.min.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/color.css">
-    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/color.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/responsive.css">
+    
+    <style type="text/css">
+    	.register-btn{
+    		background: currentColor;
+		    border: 1px solid currentColor;
+		    font-size: 16px;
+		    color: #4f93ce;
+		    margin-top: 10px;
+		    padding: 7px 30px;
+    	}
+    </style>
 </head>
 <body>
-	<body>
+
+	
+		<!-- Xử lý check trạng thái đăng nhập -->
+	<c:if test="${empty sessionScope.loginStatus}">
+		<c:redirect url="login&register.jsp" />
+	</c:if>
 <!--<div class="se-pre-con"></div>-->
 <div class="theme-layout">
 	
@@ -43,7 +60,7 @@
 	
 	<div class="topbar stick">
 		<div class="logo">
-			<a title="" href="newsfeed.jsp"><img src="images/logo.png" alt=""></a>
+			<a title="" href="newsfeed.jsp"><img src="${pageContext.request.contextPath}/Simages/logo.png" alt=""></a>
 		</div>
 		
 		<div class="top-area">
@@ -192,14 +209,30 @@
 				
 			</ul>
 			<div class="user-img">
-				<img src="images/resources/admin.jpg" alt="">
+				<img src="${pageContext.request.contextPath}/images/resources/admin.jpg" alt="">
 				<span class="status f-online"></span>
 				<div class="user-setting" style="left: -80px; width: 150px">
-					<a href="#" title=""><i class="ti-user"></i> view profile</a>
-					<a href="#" title=""><i class="ti-pencil-alt"></i>edit profile</a>
-					<a href="#" title=""><i class="ti-lock"></i>edit password</a>
-					<a href="#" title=""><i class="ti-power-off"></i>log out</a>
-				</div>
+						<script>
+							// Định nghĩa hàm redirect
+							function redirect(url) {
+								window.location.href = url;
+
+							}
+						</script>
+						<a href="my-page.jsp" title=""
+							onclick="redirect('/DoAn-SocialNetwork/my-page.jsp')"><i
+							class="ti-user"></i> view profile</a> 
+						<a href="edit-profile.jsp"
+							title=""
+							onclick="redirect('/DoAn-SocialNetwork/edit-profile.jsp')"><i
+							class="ti-pencil-alt"></i>edit profile</a>
+						<a href="edit-password.jsp" title=""
+							onclick="redirect('/DoAn-SocialNetwork/edit-password.jsp')"><i
+							class="ti-lock"></i>edit password</a> 
+						<a href="#" title=""
+							onclick="redirect('/DoAn-SocialNetwork/controller/logout-servlet')"><i
+							class="ti-power-off"></i>log out</a>
+					</div>
 			</div>
 			
 		</div>
@@ -222,7 +255,7 @@
 						<div class="col-lg-2 col-sm-3">
 							<div class="user-avatar">
 								<figure>
-									<img src="images/resources/user-avatar.jpg" alt="">
+									<img src="${pageContext.request.contextPath}/images/resources/user-avatar.jpg" alt="">
 									<form class="edit-phto">
 										<i class="fa fa-camera-retro"></i>
 										<label class="fileContainer">
@@ -293,25 +326,73 @@
 										<div class="editing-info">
 											<h5 class="f-title"><i class="ti-lock"></i>Change Password</h5>
 											
-											<form method="post">
+											<form method="post" action="/DoAn-SocialNetwork/controller/change-password-servlet">
 												<div class="form-group">	
-												  <input type="password" id="input" required="required"/>
+												  <input type="password" id="newPass" required="required" name="newPass"/>
 												  <label class="control-label" for="input">New password</label><i class="mtrl-select"></i>
 												</div>
 												<div class="form-group">	
-												  <input type="password" required="required"/>
+												  <input type="password" id="confPass" required="required" name="confPass"/>
 												  <label class="control-label" for="input">Confirm password</label><i class="mtrl-select"></i>
+												  <span id="passwordError" class="error-message" style="color: red"></span>
 												</div>
 												<div class="form-group">	
-												  <input type="password" required="required"/>
+												  <input type="password" required="required" name="currPass"/>
 												  <label class="control-label" for="input">Current password</label><i class="mtrl-select"></i>
+													
+													<%@ page import="java.net.URLDecoder" %>
+
+													<%
+														String encodedAttribute = request.getParameter("Error");
+													    String myAttribute = "";
+	
+													    try {
+													        if (encodedAttribute != null) {
+													            myAttribute = URLDecoder.decode(encodedAttribute, "UTF-8");
+													        }
+													    } catch (java.io.UnsupportedEncodingException e) {
+													        // Handle the exception, for example, print the stack trace
+													        e.printStackTrace();
+													    }
+													%>
+												  <span id="currPasswordError" class="error-message" style="color:red"> <%= myAttribute  %> </span>
 												</div>
-												<a class="forgot-pwd underline" title="" href="#">Forgot Password?</a>
+												<!-- <a class="forgot-pwd underline" title="" href="#">Forgot Password?</a> -->
 												<div class="submit-btns">
-													<button type="button" class="mtr-btn"><span>Cancel</span></button>
-													<button type="button" class="mtr-btn"><span>Update</span></button>
+												<!-- <button type="button" class="mtr-btn" ><span>Cancel</span></button> -->
+													<!-- <button type="button" class="mtr-btn" type="submit"><span>Update</span></button> -->
+													<button class="register-btn changepass-btn"  type="submit"><span style="color: white">Update</span></button>
 												</div>
 											</form>
+												<script type="text/javascript">
+														var newPassWord = document.getElementById('newPass');
+														var confPassWord = document.getElementById('confPass');
+														var passwordError = document.getElementById('passwordError');
+														
+														newPassWord.oninput = confPassWord.oninput = function() {
+												            // Lấy giá trị của các trường mật khẩu
+												            var newPassword = newPassWord.value;
+												            var confirmPassword = confPassWord.value;
+
+												            // Kiểm tra xem mật khẩu mới và mật khẩu nhập lại có giống nhau hay không
+												            if (newPassword === confirmPassword) {
+												                passwordError.textContent = ''; // Giống nhau, không có lỗi
+														        btn.disabled = false;
+												            } else {
+												                passwordError.textContent = 'Mật khẩu confirm không trùng với mật khẩu mới!'; // Không giống nhau, hiển thị lỗi
+														        btn.disabled = true;
+												            }
+												        };
+												        
+												        var btn = document.querySelector('.changepass-btn');
+														
+												        var currPasswordError = document.getElementById('currPasswordError');
+														var message = currPasswordError.textContent;
+														
+														if (message.includes('thành công')){
+															currPasswordError.style.color = 'green';
+														}
+												</script>
 										</div>
 									</div>	
 								</div><!-- centerl meta -->

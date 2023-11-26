@@ -168,6 +168,7 @@ public class taiKhoan {
         }
     }
 	
+	
 	public static taiKhoan authenticateUser(String taiKhoan, String matKhau) {	
 		
 		String hashMatKhau = sha256Hash(matKhau);
@@ -184,6 +185,15 @@ public class taiKhoan {
 		newUser.setMatKhau(hashMatKhau);
 		
 		boolean result = taiKhoanDAO.insert(newUser);
+		
+		return result;
+	}
+	public static boolean updateUser(taiKhoan updateUser) {
+		
+		String hashMatKhau = sha256Hash(updateUser.getMatKhau());
+		updateUser.setMatKhau(hashMatKhau);
+		
+		boolean result = taiKhoanDAO.update(updateUser);
 		
 		return result;
 	}

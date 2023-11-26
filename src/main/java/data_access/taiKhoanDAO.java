@@ -67,13 +67,39 @@ public class taiKhoanDAO implements IDataAccess<taiKhoan> {
 
 	@Override
 	public boolean delete(taiKhoan t) {
-		// TODO Auto-generated method stub
+		
 		return false;
 	}
 
 	@Override
 	public boolean update(taiKhoan t) {
-		// TODO Auto-generated method stub
+		Connection con = JDBCUtil.getConnection();
+		
+		try {
+			String sql = "UPDATE `dbmangxahoi`.`taikhoan` SET `taiKhoan`=?, `matKhau`=?, "
+					+ "`anhDaiDien`=?, `hoTen`=?, `diaChi`=?, `email`=?, `soDienThoai`=?, `gioiTinh`=? "
+					+ "WHERE `id`=?;";
+			
+			PreparedStatement st = con.prepareStatement(sql);
+			
+			st.setString(1, t.getTaiKhoan());
+			st.setString(2, t.getMatKhau());
+			st.setString(3, t.getAnhDaiDien().trim());
+			st.setString(4, t.getHoTen());			
+			st.setString(5, t.getDiaChi());			
+			st.setString(6, t.getEmail());			
+			st.setString(7, t.getSoDienThoai());			
+			st.setBoolean(8, t.isGioiTinh());
+			st.setInt(9, t.getId());
+			
+			st.executeUpdate();
+			
+			JDBCUtil.closeConnection(con);
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		JDBCUtil.closeConnection(con);
 		return false;
 	}
 
