@@ -199,7 +199,7 @@ public class taiKhoan {
 	}
 	public static boolean updateUserProfile(taiKhoan updateUser) {
 		
-		boolean result = taiKhoanDAO.update(updateUser);
+		boolean result = taiKhoanDAO.updateProfile(updateUser);
 		
 		return result;
 	}

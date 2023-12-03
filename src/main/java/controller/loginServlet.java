@@ -65,7 +65,7 @@ public class loginServlet extends HttpServlet {
 		else {
 			session.setAttribute("loginMessage", "Sai thông tin đăng nhập!");
 			session.setAttribute("loginStatus", false);
-//			request.getRequestDispatcher("/login&register.jsp").forward(request, response);
+//			request.getRequestDispatcher("/login&register.jsp").include(request, response);
 			response.sendRedirect(request.getContextPath() + "/login&register.jsp");
 		}
 		
