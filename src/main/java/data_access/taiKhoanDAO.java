@@ -102,6 +102,35 @@ public class taiKhoanDAO implements IDataAccess<taiKhoan> {
 		JDBCUtil.closeConnection(con);
 		return false;
 	}
+	public boolean updateProfile(taiKhoan t) {
+		Connection con = JDBCUtil.getConnection();
+		
+		try {
+			String sql = "UPDATE `dbmangxahoi`.`taikhoan` SET `taiKhoan`=?, "
+					+ "`anhDaiDien`=?, `hoTen`=?, `diaChi`=?, `email`=?, `soDienThoai`=?, `gioiTinh`=? "
+					+ "WHERE `id`=?;";
+			
+			PreparedStatement st = con.prepareStatement(sql);
+			
+			st.setString(1, t.getTaiKhoan());
+			st.setString(3, t.getAnhDaiDien().trim());
+			st.setString(4, t.getHoTen());			
+			st.setString(5, t.getDiaChi());			
+			st.setString(6, t.getEmail());			
+			st.setString(7, t.getSoDienThoai());			
+			st.setBoolean(8, t.isGioiTinh());
+			st.setInt(9, t.getId());
+			
+			st.executeUpdate();
+			
+			JDBCUtil.closeConnection(con);
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		JDBCUtil.closeConnection(con);
+		return false;
+	}
 
 	@Override
 	public taiKhoan selectById(int id) {

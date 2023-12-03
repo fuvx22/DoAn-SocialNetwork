@@ -209,7 +209,10 @@
 				
 			</ul>
 			<div class="user-img">
-				<img src="${pageContext.request.contextPath}/images/resources/admin.jpg" alt="">
+				<c:set var="user"
+					value="${sessionScope.loggedInUser}" />
+				<img src="${user.getAnhDaiDien()}" alt="nothing" width="60px" height="60px">
+				<%-- <img src="${pageContext.request.contextPath}/images/resources/admin.jpg" alt=""> --%>
 				<span class="status f-online"></span>
 				<div class="user-setting" style="left: -80px; width: 150px">
 						<script>
@@ -255,7 +258,8 @@
 						<div class="col-lg-2 col-sm-3">
 							<div class="user-avatar">
 								<figure>
-									<img src="${pageContext.request.contextPath}/images/resources/user-avatar.jpg" alt="">
+									<img src="${user.getAnhDaiDien()}" >
+									<%-- <img src="${pageContext.request.contextPath}/images/resources/user-avatar.jpg" alt=""> --%>
 									<form class="edit-phto">
 										<i class="fa fa-camera-retro"></i>
 										<label class="fileContainer">
@@ -269,7 +273,7 @@
 							<div style="padding-top: 10px"> 
 								<ul style="list-style-type: none">
 									<li class="admin-name" >
-									  <h5 style="text-align: center; color: #088dcd">Janice Griffith</h5>
+									  <h5 style="text-align: left; color: #088dcd">${user.getHoTen()}</h5>
 									</li>
 								</ul>
 							</div>

@@ -197,4 +197,10 @@ public class taiKhoan {
 		
 		return result;
 	}
+	public static boolean updateUserProfile(taiKhoan updateUser) {
+		
+		boolean result = taiKhoanDAO.update(updateUser);
+		
+		return result;
+	}
 }
