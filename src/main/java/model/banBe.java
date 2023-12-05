@@ -1,23 +1,18 @@
 package model;
 
+import java.util.ArrayList;
+
+import data_access.banBeDAO;
+
 public class banBe {
-	private int id;
 	private int taiKhoan_id;
-	private taiKhoan banBe;
+	private ArrayList<taiKhoan> ListbanBe;
+	private static banBeDAO DAO = new banBeDAO();
 	
-	public banBe(int id, int taiKhoan_id, taiKhoan banBe) {
+	public banBe(int taiKhoan_id, ArrayList<taiKhoan> listbanBe) {
 		super();
-		this.id = id;
 		this.taiKhoan_id = taiKhoan_id;
-		this.banBe = banBe;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
+		ListbanBe = listbanBe;
 	}
 
 	public int getTaiKhoan_id() {
@@ -28,13 +23,21 @@ public class banBe {
 		this.taiKhoan_id = taiKhoan_id;
 	}
 
-	public taiKhoan getBanBe() {
-		return banBe;
+	public ArrayList<taiKhoan> getListbanBe() {
+		return ListbanBe;
 	}
 
-	public void setBanBe(taiKhoan banBe) {
-		this.banBe = banBe;
+	public void setListbanBe(ArrayList<taiKhoan> listbanBe) {
+		ListbanBe = listbanBe;
 	}
 	
-	
+	public static banBe getDSBanBe(int id) {
+		return DAO.getUserFriends(id);
+	}
+	public static void main(String[] args) {
+		banBe test =  banBe.getDSBanBe(1);
+		for (taiKhoan t : test.getListbanBe()) {
+			System.out.println(t.getId());
+		} 
+	}
 }

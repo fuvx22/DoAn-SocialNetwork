@@ -113,13 +113,13 @@ public class taiKhoanDAO implements IDataAccess<taiKhoan> {
 			PreparedStatement st = con.prepareStatement(sql);
 			
 			st.setString(1, t.getTaiKhoan());
-			st.setString(3, t.getAnhDaiDien().trim());
-			st.setString(4, t.getHoTen());			
-			st.setString(5, t.getDiaChi());			
-			st.setString(6, t.getEmail());			
-			st.setString(7, t.getSoDienThoai());			
-			st.setBoolean(8, t.isGioiTinh());
-			st.setInt(9, t.getId());
+			st.setString(2, t.getAnhDaiDien().trim());
+			st.setString(3, t.getHoTen());			
+			st.setString(4, t.getDiaChi());			
+			st.setString(5, t.getEmail());			
+			st.setString(6, t.getSoDienThoai());			
+			st.setBoolean(7, t.isGioiTinh());
+			st.setInt(8, t.getId());
 			
 			st.executeUpdate();
 			
@@ -197,7 +197,7 @@ public class taiKhoanDAO implements IDataAccess<taiKhoan> {
 			
 			while (rs.next()) {
 				//int id = rs.getInt("id");
-				String taiKhoan = rs.getString("taiKhoan");
+				//String taiKhoan = rs.getString("taiKhoan");
 				//String matKhau = rs.getString("matKhau");
 				//String anhDaiDien = rs.getString("anhDaiDien");
 				//String hoTen = rs.getString("hoTen");
@@ -207,7 +207,7 @@ public class taiKhoanDAO implements IDataAccess<taiKhoan> {
 				//String status = rs.getString("status");
 				//boolean gioiTinh = rs.getBoolean("gioiTnh");
 				
-				taiKhoan tk = new taiKhoan(taiKhoan);
+				//taiKhoan tk = new taiKhoan(taiKhoan);
 			}
 			
 		} catch (Exception e) {

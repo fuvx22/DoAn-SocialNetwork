@@ -16,8 +16,6 @@ public class taiKhoan {
 	private String soDienThoai;
 	private String status;
 	private static taiKhoanDAO taiKhoanDAO = new taiKhoanDAO();
-
-	
 	
 	public taiKhoan(String taiKhoan) {
 		super();
@@ -61,6 +59,13 @@ public class taiKhoan {
 		this.email = email;
 		this.soDienThoai = soDienThoai;
 		this.status = status;
+	}
+
+	public taiKhoan(int id, String anhDaiDien, String hoTen) {
+		super();
+		this.id = id;
+		this.anhDaiDien = anhDaiDien;
+		this.hoTen = hoTen;
 	}
 
 	public taiKhoan() {

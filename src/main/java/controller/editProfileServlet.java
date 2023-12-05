@@ -38,14 +38,15 @@ public class editProfileServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		request.setCharacterEncoding("UTF-8");
 		taiKhoan edit_tk = (taiKhoan) request.getSession().getAttribute("loggedInUser");
 		
 		String name = request.getParameter("name");
 		String email = request.getParameter("email");
 		String phone_number = request.getParameter("phone_number");
-		String sex = request.getParameter("se_radio");
+		String sex = request.getParameter("gender");
 		Boolean gender = false;
-		if (sex == "male") {
+		if (sex.equalsIgnoreCase("male")) {
 			gender = true;
 		}
 		String address = request.getParameter("address");
@@ -55,6 +56,7 @@ public class editProfileServlet extends HttpServlet {
 		edit_tk.setSoDienThoai(phone_number);
 		edit_tk.setGioiTinh(gender);
 		edit_tk.setDiaChi(address);
+		
 		
 		taiKhoan.updateUserProfile(edit_tk);
 		

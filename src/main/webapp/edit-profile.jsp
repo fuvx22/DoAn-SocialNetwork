@@ -206,7 +206,7 @@
 								window.location.href = url;
 
 							}
-						</script>
+					</script>
 						<a href="my-page.jsp" title=""
 							onclick="redirect('/DoAn-SocialNetwork/my-page.jsp')"><i
 							class="ti-user"></i> view profile</a> 
@@ -314,17 +314,17 @@
 									<div class="editing-info">
 										<h5 class="f-title"><i class="ti-info-alt"></i> Edit Basic Information</h5>
 
-										<form method="post" action="/DoAn-SocialNetwork/controller/edit-profile-servlet">
+										<form method="post" action="/DoAn-SocialNetwork/controller/edit-profile-servlet" accept-charset="UTF-8">
 											<div class="form-group ">	
-											  <input type="text" id="input" required="required" name="name"/>
+											  <input type="text" id="input" required="required" name="name" value="${user.getHoTen()}"/>
 											  <label class="control-label" for="input">Your Name</label><i class="mtrl-select"></i>
 											</div>
 											<div class="form-group">	
-											  <input type="email" required="required" name="email"/>
+											  <input type="email" required="required" name="email" value="${user.getEmail()}"/>
 											  <label class="control-label" for="input"><a href="https://wpkixx.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="4b0e262a22270b">[email&#160;protected]</a></label><i class="mtrl-select"></i>
 											</div>
 											<div class="form-group">	
-											  <input type="text" required="required" name="phone_number" id="phone_input"/>
+											  <input type="text" required="required" name="phone_number" id="phone_input" value="${user.getSoDienThoai()}"/>
 											  <label class="control-label" for="input">Phone No.</label><i class="mtrl-select"></i>
 											  <span id="phone-error-message" class="error-message" style="color: red"></span>
 											</div>
@@ -332,17 +332,17 @@
 											<div class="form-radio">
 											  <div class="radio">
 												<label>
-												  <input type="radio" checked="checked" name="se-radio" value="male"><i class="check-box"></i>Male
+												  <input type="radio"  name="gender" value="male"><i class="check-box"></i>Male
 												</label>
 											  </div>
 											  <div class="radio">
 												<label>
-												  <input type="radio" name="se-radio" value="female"><i class="check-box"></i>Female
+												  <input type="radio"  name="gender" value="female"><i class="check-box"></i>Female
 												</label>
 											  </div>
 											</div>
 											<div class="form-group">	
-											  <input type="text" required="required" name="address"/>
+											  <input type="text" required="required" name="address" value="${user.getDiaChi()}"/>
 											  <label class="control-label" for="input">Your address</label><i class="mtrl-select"></i>
 											</div>
 													
@@ -355,6 +355,7 @@
 												var phone_input = document.getElementById('phone_input');
 												var phone_error = document.getElementById('phone-error-message');
 												var submit_btn = document.getElementById('submit-btn');
+												
 												
 												function validatePhoneNumber(phoneNumber) {
 												    // Sử dụng biểu thức chính quy để kiểm tra số điện thoại có đúng định dạng không
@@ -379,6 +380,14 @@
 															phone_error.textContent = '';
 														}
 													}
+												}
+												
+												var isMale = ${user.isGioiTinh()};
+												var gender = document.getElementsByName('gender');
+												if(isMale){
+													gender[0].checked = true;
+												}else {
+													gender[1].checked = true;
 												}
 										</script>
 									</div>

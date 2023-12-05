@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+ <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,12 +12,15 @@
 	<title>Winku Social Network Toolkit</title>
     <link rel="icon" href="images/fav.png" type="image/png" sizes="16x16"> 
     
-    <link rel="stylesheet" href="css/main.min.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/color.css">
-    <link rel="stylesheet" href="css/responsive.css">
+     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/color.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/responsive.css">
 </head>
 <body>
+<c:if test="${empty sessionScope.loginStatus}">
+		<c:redirect url="login&register.jsp" />
+</c:if>
 <!--<div class="se-pre-con"></div>-->
 <div class="theme-layout">
 	
@@ -192,13 +196,31 @@
 				
 			</ul>
 			<div class="user-img">
-				<img src="images/resources/admin.jpg" alt="">
+				<c:set var="user"
+					value="${sessionScope.loggedInUser}" />
+				<img src="${user.getAnhDaiDien()}" alt="nothing" width="60px" height="60px">
 				<span class="status f-online"></span>
 				<div class="user-setting" style="left: -80px; width: 150px">
-					<a href="#" title=""><i class="ti-user"></i> view profile</a>
-					<a href="#" title=""><i class="ti-pencil-alt"></i>edit profile</a>
-					<a href="#" title=""><i class="ti-lock"></i>edit password</a>
-					<a href="#" title=""><i class="ti-power-off"></i>log out</a>
+					<script>
+							// Định nghĩa hàm redirect
+							function redirect(url) {
+								window.location.href = url;
+
+							}
+					</script>
+						<a href="my-page.jsp" title=""
+							onclick="redirect('/DoAn-SocialNetwork/my-page.jsp')"><i
+							class="ti-user"></i> view profile</a> 
+						<a href="edit-profile.jsp"
+							title=""
+							onclick="redirect('/DoAn-SocialNetwork/edit-profile.jsp')"><i
+							class="ti-pencil-alt"></i>edit profile</a>
+						<a href="edit-password.jsp" title=""
+							onclick="redirect('/DoAn-SocialNetwork/edit-password.jsp')"><i
+							class="ti-lock"></i>edit password</a> 
+						<a href="#" title=""
+							onclick="redirect('/DoAn-SocialNetwork/controller/logout-servlet')"><i
+							class="ti-power-off"></i>log out</a>
 				</div>
 			</div>
 			
@@ -222,7 +244,7 @@
 						<div class="col-lg-2 col-sm-3">
 							<div class="user-avatar">
 								<figure>
-									<img src="images/resources/user-avatar.jpg" alt="">
+									<img src="${user.getAnhDaiDien()}" alt="">
 									<form class="edit-phto">
 										<i class="fa fa-camera-retro"></i>
 										<label class="fileContainer">
@@ -294,7 +316,6 @@
 									<div class="frnds">
 										<ul class="nav nav-tabs">
 											 <li class="nav-item"><a class="active" href="#frends" data-toggle="tab">My Friends</a> <span>55</span></li>
-											 <li class="nav-item"><a class="" href="#frends-req" data-toggle="tab">Friend Requests</a><span>60</span></li>
 										</ul>
 
 										<!-- Tab panes -->
@@ -408,223 +429,7 @@
 										</ul>
 											<div class="lodmore"><button class="btn-view btn-load-more"></button></div>
 										  </div>
-										  <div class="tab-pane fade" id="frends-req" >
-											<ul class="nearby-contct">
-											<li>
-												<div class="nearly-pepls">
-													<figure>
-														<a href="time-line.html" title=""><img src="images/resources/nearly5.jpg" alt=""></a>
-													</figure>
-													<div class="pepl-info">
-														<h4><a href="time-line.html" title="">Amy watson</a></h4>
-														<span>ftv model</span>
-														<a href="#" title="" class="add-butn more-action" data-ripple="">delete Request</a>
-														<a href="#" title="" class="add-butn" data-ripple="">Confirm</a>
-													</div>
-												</div>
-											</li>	
-
-											<li>
-												<div class="nearly-pepls">
-													<figure>
-														<a href="time-line.html" title=""><img src="images/resources/nearly1.jpg" alt=""></a>
-													</figure>
-													<div class="pepl-info">
-														<h4><a href="time-line.html" title="">sophia Gate</a></h4>
-														<span>ftv model</span>
-														<a href="#" title="" class="add-butn more-action" data-ripple="">delete Request</a>
-														<a href="#" title="" class="add-butn" data-ripple="">Confirm</a>
-													</div>
-												</div>
-											</li>
-											<li>
-												<div class="nearly-pepls">
-													<figure>
-														<a href="time-line.html" title=""><img src="images/resources/nearly6.jpg" alt=""></a>
-													</figure>
-													<div class="pepl-info">
-														<h4><a href="time-line.html" title="">caty lasbo</a></h4>
-														<span>ftv model</span>
-														<a href="#" title="" class="add-butn more-action" data-ripple="">delete Request</a>
-														<a href="#" title="" class="add-butn" data-ripple="">Confirm</a>
-													</div>
-												</div>
-											</li>
-											<li>
-												<div class="nearly-pepls">
-													<figure>
-														<a href="time-line.html" title=""><img src="images/resources/friend-avatar9.jpg" alt=""></a>
-													</figure>
-													<div class="pepl-info">
-														<h4><a href="time-line.html" title="">jhon kates</a></h4>
-														<span>ftv model</span>
-														<a href="#" title="" class="add-butn more-action" data-ripple="">delete Request</a>
-														<a href="#" title="" class="add-butn" data-ripple="">Confirm</a>
-													</div>
-												</div>
-											</li>
-											<li>
-												<div class="nearly-pepls">
-													<figure>
-														<a href="time-line.html" title=""><img src="images/resources/nearly2.jpg" alt=""></a>
-													</figure>
-													<div class="pepl-info">
-														<h4><a href="time-line.html" title="">sara grey</a></h4>
-														<span>ftv model</span>
-														<a href="#" title="" class="add-butn more-action" data-ripple="">delete Request</a>
-														<a href="#" title="" class="add-butn" data-ripple="">Confirm</a>
-													</div>
-												</div>
-											</li>
-											<li>
-												<div class="nearly-pepls">
-													<figure>
-														<a href="time-line.html" title=""><img src="images/resources/nearly4.jpg" alt=""></a>
-													</figure>
-													<div class="pepl-info">
-														<h4><a href="time-line.html" title="">Sara grey</a></h4>
-														<span>ftv model</span>
-														<a href="#" title="" class="add-butn more-action" data-ripple="">delete Request</a>
-														<a href="#" title="" class="add-butn" data-ripple="">Confirm</a>
-													</div>
-												</div>
-											</li>
-											<li>
-												<div class="nearly-pepls">
-													<figure>
-														<a href="time-line.html" title=""><img src="images/resources/nearly3.jpg" alt=""></a>
-													</figure>
-													<div class="pepl-info">
-														<h4><a href="time-line.html" title="">Sexy cat</a></h4>
-														<span>ftv model</span>
-														<a href="#" title="" class="add-butn more-action" data-ripple="">delete Request</a>
-														<a href="#" title="" class="add-butn" data-ripple="">Confirm</a>
-													</div>
-												</div>
-											</li>
-											<li>
-												<div class="nearly-pepls">
-													<figure>
-														<a href="time-line.html" title=""><img src="images/resources/friend-avatar9.jpg" alt=""></a>
-													</figure>
-													<div class="pepl-info">
-														<h4><a href="time-line.html" title="">jhon kates</a></h4>
-														<span>ftv model</span>
-														<a href="#" title="" class="add-butn more-action" data-ripple="">delete Request</a>
-														<a href="#" title="" class="add-butn" data-ripple="">Confirm</a>
-													</div>
-												</div>
-											</li>
-										</ul>	
-											  <button class="btn-view btn-load-more"></button>
-										  </div>
-										</div>
-									</div>
-								</div>	
-							</div><!-- centerl meta -->
-							<div class="col-lg-3">
-								<aside class="sidebar static">
-									
-									<div class="widget friend-list stick-widget">
-										<h4 class="widget-title">Friends</h4>
-										<div id="searchDir"></div>
-										<ul id="people-list" class="friendz-list">
-											<li>
-												<figure>
-													<img src="images/resources/friend-avatar.jpg" alt="">
-													<span class="status f-online"></span>
-												</figure>
-												<div class="friendz-meta">
-													<a href="time-line.html">bucky barnes</a>
-													<i><a href="https://wpkixx.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c6b1afa8b2a3b4b5a9aaa2a3b486a1aba7afaae8a5a9ab">[email&#160;protected]</a></i>
-												</div>
-											</li>
-											<li>
-												<figure>
-													<img src="images/resources/friend-avatar2.jpg" alt="">
-													<span class="status f-away"></span>
-												</figure>
-												<div class="friendz-meta">
-													<a href="time-line.html">Sarah Loren</a>
-													<i><a href="https://wpkixx.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="82e0e3f0ece7f1c2e5efe3ebeeace1edef">[email&#160;protected]</a></i>
-												</div>
-											</li>
-											<li>
-												<figure>
-													<img src="images/resources/friend-avatar3.jpg" alt="">
-													<span class="status f-off"></span>
-												</figure>
-												<div class="friendz-meta">
-													<a href="time-line.html">jason borne</a>
-													<i><a href="https://wpkixx.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="6f050e1c00010d2f08020e0603410c0002">[email&#160;protected]</a></i>
-												</div>
-											</li>
-											<li>
-												<figure>
-													<img src="images/resources/friend-avatar4.jpg" alt="">
-													<span class="status f-off"></span>
-												</figure>
-												<div class="friendz-meta">
-													<a href="time-line.html">Cameron diaz</a>
-													<i><a href="https://wpkixx.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="147e75677b7a76547379757d783a777b79">[email&#160;protected]</a></i>
-												</div>
-											</li>
-											<li>
-												
-												<figure>
-													<img src="images/resources/friend-avatar5.jpg" alt="">
-													<span class="status f-online"></span>
-												</figure>
-												<div class="friendz-meta">
-													<a href="time-line.html">daniel warber</a>
-													<i><a href="https://wpkixx.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="640e05170b0a06240309050d084a070b09">[email&#160;protected]</a></i>
-												</div>
-											</li>
-											<li>
-												
-												<figure>
-													<img src="images/resources/friend-avatar6.jpg" alt="">
-													<span class="status f-away"></span>
-												</figure>
-												<div class="friendz-meta">
-													<a href="time-line.html">andrew</a>
-													<i><a href="https://wpkixx.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d3b9b2a0bcbdb193b4beb2babffdb0bcbe">[email&#160;protected]</a></i>
-												</div>
-											</li>
-											<li>
-												
-												<figure>
-													<img src="images/resources/friend-avatar7.jpg" alt="">
-													<span class="status f-off"></span>
-												</figure>
-												<div class="friendz-meta">
-													<a href="time-line.html">amy watson</a>
-													<i><a href="https://wpkixx.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="deb4bfadb1b0bc9eb9b3bfb7b2f0bdb1b3">[email&#160;protected]</a></i>
-												</div>
-											</li>
-											<li>
-												
-												<figure>
-													<img src="images/resources/friend-avatar5.jpg" alt="">
-													<span class="status f-online"></span>
-												</figure>
-												<div class="friendz-meta">
-													<a href="time-line.html">daniel warber</a>
-													<i><a href="https://wpkixx.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="bbd1dac8d4d5d9fbdcd6dad2d795d8d4d6">[email&#160;protected]</a></i>
-												</div>
-											</li>
-											<li>
-												
-												<figure>
-													<img src="images/resources/friend-avatar2.jpg" alt="">
-													<span class="status f-away"></span>
-												</figure>
-												<div class="friendz-meta">
-													<a href="time-line.html">Sarah Loren</a>
-													<i><a href="https://wpkixx.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ff9d9e8d919a8cbf98929e9693d19c9092">[email&#160;protected]</a></i>
-												</div>
-											</li>
-										</ul>
+										 </div>
 										<div class="chat-box">
 											<div class="chat-head">
 												<span class="status f-online"></span>
