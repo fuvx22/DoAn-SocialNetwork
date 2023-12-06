@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -45,9 +46,12 @@ public class loginServlet extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//doGet(request, response);
+		
 
 		String username = request.getParameter("username").trim();
 		String password = request.getParameter("password").trim();
+		String isRememberUser[] = request.getParameterValues("isRememberUser");
+		
 		
 		
 		taiKhoan user = new taiKhoan();
@@ -60,6 +64,38 @@ public class loginServlet extends HttpServlet {
 			session.setAttribute("loginMessage", "");
 			session.setAttribute("loginStatus", true);
 //			request.getRequestDispatcher("/newsfeed.jsp").forward(request, response);
+			
+			Cookie ckUsername,ckPassword;
+			if (isRememberUser != null) {
+				ckUsername = new Cookie("username", username);
+				ckPassword = new Cookie("password", password);
+				ckUsername.setMaxAge(60*60*24);
+				ckPassword.setMaxAge(60*60*24);
+				ckUsername.setPath("/");
+				ckPassword.setPath("/");
+				response.addCookie(ckUsername);
+				response.addCookie(ckPassword);
+			} else {
+		        Cookie[] cookies = null;
+		 
+		        cookies = request.getCookies();
+		        
+		        if (cookies != null) {
+		        	
+		            for (int i = 0; i < cookies.length; i++) {
+		            	 Cookie cookie = cookies[i];
+
+		                 // Đặt MaxAge về 0 và thiết lập các thông tin cần thiết
+		                 cookie.setMaxAge(0);
+		                 cookie.setPath("/"); // Đặt path chung
+
+		                 // Thêm cookie đã chỉnh sửa vào response
+		                 response.addCookie(cookie);
+		                 
+		            }
+		        }
+			}
+			
 			response.sendRedirect(request.getContextPath() + "/newsfeed.jsp");
 		}
 		else {

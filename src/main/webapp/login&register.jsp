@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+   <%@ page import="javax.servlet.http.Cookie" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -63,12 +64,33 @@ String url = request.getScheme() + "://" + request.getServerName() + ":" + reque
 						<h5 class="log-title mt-3 " style="color:red"><%=(session.getAttribute("loginMessage") != null) ? session.getAttribute("loginMessage") : "" %></h5>
 							
 						<form method="post" action="/DoAn-SocialNetwork/controller/login-servlet">
+								
+								<%
+									Cookie[] cookies = null;
+									Cookie cookie = null;
+									cookies = request.getCookies();
+								    String username = ""; 
+								    String password = ""; 
+									
+									if (cookies != null) {
+							 
+							            for (int i = 0; i < cookies.length; i++) {
+							                cookie = cookies[i];
+							               	if (cookie.getName().equals("username")){
+							               		username = cookie.getValue();
+							               	} 
+							               	else if (cookie.getName().equals("password")){
+							               		password = cookie.getValue();
+							               	}
+							            }
+									}   
+								%>								
 							<div class="form-group">	
-							  <input type="text" id="input" required="required" name="username"/>
+							  <input type="text" id="input" required="required" name="username" value="<%= username%>"/>
 							  <label class="control-label" for="input" >Username</label><i class="mtrl-select"></i>
 							</div>
 							<div class="form-group">	
-							  <input type="password" required="required" name="password"/>
+							  <input type="password" required="required" name="password" value="<%= password%>"/>
 							  <label class="control-label" for="input" >Password</label><i class="mtrl-select"></i>
 							</div>
 						
@@ -76,7 +98,7 @@ String url = request.getScheme() + "://" + request.getServerName() + ":" + reque
 						
 							<div class="checkbox">
 							  <label>
-								<input type="checkbox" checked="checked"/><i class="check-box"></i>Always Remember Me.
+								<input type="checkbox" checked="checked" name="isRememberUser"/><i class="check-box"></i>Always Remember Me.
 							  </label>
 							</div>
 							<a href="#" title="" class="forgot-pwd">Forgot Password?</a>
