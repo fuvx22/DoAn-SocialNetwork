@@ -63,7 +63,6 @@ public class RegisterServlet extends HttpServlet {
 		
 		taiKhoan tk = new taiKhoan(0, username, MaHoa.sha256Hash(password), fullname, gender, email);
 		tk.setAnhDaiDien(request.getContextPath()+"/images/avatar-resource/default-avatar.png");
-		System.out.println(tk.getAnhDaiDien());
 		taiKhoanDAO tkDao = new taiKhoanDAO();
 		
 		if (tkDao.checkTaiKhoanIfExist(username)) {

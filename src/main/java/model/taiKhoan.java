@@ -2,6 +2,8 @@ package model;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+
 import data_access.taiKhoanDAO;
 
 public class taiKhoan {
@@ -207,5 +209,8 @@ public class taiKhoan {
 		boolean result = taiKhoanDAO.updateProfile(updateUser);
 		
 		return result;
+	}
+	public ArrayList<taiKhoan> selectAll(){
+		return taiKhoanDAO.selectAll();
 	}
 }

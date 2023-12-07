@@ -301,7 +301,7 @@
 											</li>
 											<li>
 												<i class="ti-user"></i>
-												<a href="friends.jsp" title="">Friends</a>
+												<a href="/DoAn-SocialNetwork/controller/friend-servlet" title="">Friends</a>
 											</li>
 											<li>
 												<i class="ti-image"></i>

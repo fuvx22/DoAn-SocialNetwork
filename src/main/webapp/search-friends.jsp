@@ -1,7 +1,6 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,14 +12,12 @@
 <title>Winku Social Network Toolkit</title>
 <link rel="icon" href="images/fav.png" type="image/png" sizes="16x16">
 
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/main.min.css">
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/style.css">
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/color.css">
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/responsive.css">
+<link rel="stylesheet" href="css/main.min.css">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/color.css">
+<link rel="stylesheet" href="css/responsive.css">
+
+
 </head>
 <body>
 	<c:if test="${empty sessionScope.loginStatus}">
@@ -28,7 +25,8 @@
 	</c:if>
 	<!--<div class="se-pre-con"></div>-->
 	<div class="theme-layout">
-
+	
+	
 		<div class="responsive-header">
 			<div class="mh-head first Sticky">
 				<span class="mh-btns-left"> <a class="" href="#menu"><i
@@ -46,6 +44,7 @@
 			</div>
 
 		</div>
+
 		<!-- responsive header -->
 
 		<div class="topbar stick">
@@ -53,20 +52,35 @@
 				<a title="" href="newsfeed.jsp"><img src="images/logo.png"
 					alt=""></a>
 			</div>
-
 			<div class="top-area">
 
 				<ul class="setting-area">
 					<li><a href="#" title="Home" data-ripple=""><i
 							class="ti-search"></i></a>
 						<div class="searched">
-							<form method="post" class="form-search">
-								<input type="text" placeholder="Search Friend">
-								<button data-ripple>
+							<form method="post" class="form-search" id="searchForm" action="/DoAn-SocialNetwork/search-friends">
+							
+								<input type="text" placeholder="Search Users" name="keyWord" required>
+								
+								<button type="button" onclick="submitSearchForm()">
 									<i class="ti-search"></i>
 								</button>
+							<script type="text/javascript">
+								function submitSearchForm() {
+									var form = document.getElementById("searchForm");
+									var input = document.querySelector('input[name="keyWord"]');
+									
+									if(input.value.length < 1){
+										input.placeholder = "Please type something to find!"
+										return;
+									}
+									
+								    form.submit();
+								}
+							</script>
 							</form>
-						</div></li>
+						</div>
+					</li>
 					<li><a href="newsfeed.html" title="Home" data-ripple=""><i
 							class="ti-home"></i></a></li>
 					<li><a href="#" title="Notification" data-ripple=""> <i
@@ -160,9 +174,10 @@
 
 				</ul>
 				<div class="user-img">
-					<c:set var="user" value="${sessionScope.loggedInUser}" />
-					<img src="${user.getAnhDaiDien()}" alt="nothing" width="60px"
-						height="60px"> <span class="status f-online"></span>
+					<c:set var="avatar"
+						value="${sessionScope.loggedInUser.getAnhDaiDien()}" />
+					<img src="${avatar}" alt="nothing" width="60px" height="60px">
+					<span	class="status f-online"></span>
 					<div class="user-setting" style="left: -80px; width: 150px">
 						<script>
 							// Định nghĩa hàm redirect
@@ -173,13 +188,15 @@
 						</script>
 						<a href="my-page.jsp" title=""
 							onclick="redirect('/DoAn-SocialNetwork/my-page.jsp')"><i
-							class="ti-user"></i> view profile</a> <a href="edit-profile.jsp"
+							class="ti-user"></i> view profile</a> 
+						<a href="edit-profile.jsp"
 							title=""
 							onclick="redirect('/DoAn-SocialNetwork/edit-profile.jsp')"><i
-							class="ti-pencil-alt"></i>edit profile</a> <a
-							href="edit-password.jsp" title=""
+							class="ti-pencil-alt"></i>edit profile</a>
+						<a href="edit-password.jsp" title=""
 							onclick="redirect('/DoAn-SocialNetwork/edit-password.jsp')"><i
-							class="ti-lock"></i>edit password</a> <a href="#" title=""
+							class="ti-lock"></i>edit password</a> 
+						<a href="#" title=""
 							onclick="redirect('/DoAn-SocialNetwork/controller/logout-servlet')"><i
 							class="ti-power-off"></i>log out</a>
 					</div>
@@ -190,198 +207,224 @@
 		<!-- topbar -->
 
 		<section>
-			<div class="feature-photo">
-				<figure>
-					<img src="images/resources/timeline-1.jpg" alt="">
-				</figure>
-
-
-				<form class="edit-phto">
-					<i class="fa fa-camera-retro"></i> <label class="fileContainer">
-						Edit Cover Photo <input type="file" />
-					</label>
-				</form>
-				<div class="container-fluid">
-					<div class="row merged">
-						<div class="col-lg-2 col-sm-3">
-							<div class="user-avatar">
-								<figure>
-									<img src="${user.getAnhDaiDien()}" alt="">
-									<form class="edit-phto">
-										<i class="fa fa-camera-retro"></i> <label
-											class="fileContainer"> Edit Display Photo <input
-											type="file" />
-										</label>
-									</form>
-								</figure>
-							</div>
-
-							<div style="padding-top: 10px">
-								<ul style="list-style-type: none">
-									<li class="admin-name">
-										<h5 style="text-align: left; color: #088dcd">${user.getHoTen()}</h5>
-									</li>
-								</ul>
-							</div>
-						</div>
-
-					</div>
-				</div>
-			</div>
-		</section>
-		<!-- top area -->
-
-		<section>
 			<div class="gap gray-bg">
 				<div class="container-fluid">
 					<div class="row">
 						<div class="col-lg-12">
 							<div class="row" id="page-contents">
-								<div class="col-lg-3">
-									<aside class="sidebar static">
-										<div class="widget">
-											<h4 class="widget-title">Shortcuts</h4>
-											<ul class="naves">
-												<li><i class="ti-clipboard"></i> <a href="newsfeed.jsp"
-													title="">News feed</a></li>
-
-												<li><i class="ti-files"></i> <a href="my-page.jsp"
-													title="">My pages</a></li>
-												<li><i class="ti-user"></i> <a href="friends.jsp"
-													title="">Friends</a></li>
-												<li><i class="ti-image"></i> <a href="photos.jsp"
-													title="">Images</a></li>
-												<li><i class="ti-video-camera"></i> <a
-													href="videos.jsp" title="">Videos</a></li>
-												<li><i class="ti-comments-smiley"></i> <a
-													href="messages.html" title="">Messages</a></li>
-											</ul>
-										</div>
-										<!-- Shortcuts -->
-
-
-									</aside>
-								</div>
+								<div class="col-lg-3"></div>
 								<!-- sidebar -->
 								<div class="col-lg-6">
 									<div class="central-meta">
 										<div class="frnds">
-											<ul class="nav nav-tabs">
-												<li class="nav-item"><a class="active" href="#frends"
-													data-toggle="tab">My Friends</a> <span>${fn:length(userFriend.listbanBe)}</span></li>
-											</ul>
+
 
 											<!-- Tab panes -->
 											<div class="tab-content">
 												<div class="tab-pane active fade show " id="frends">
+												<c:if test="${not empty sessionScope.arrayList_TaiKhoans_SauKhiTimKiem}">
 													<ul class="nearby-contct">
-														<c:forEach var="friend" items="${userFriend.getListbanBe()}" varStatus="loop">
-															<!-- Các phần tử của mỗi bạn bè -->
-															<li>
-																<div class="nearly-pepls">
-																	<figure>
-																		<a href="profile.jsp?id=${friend.getId()}" title=""> <img
-																			src="${friend.getAnhDaiDien()}" alt="">
-																		</a>
-																	</figure>
-																	<div class="pepl-info">
-																		<h4>
-																			<a href="profile.jsp?id=${friend.getId()}" title="">
-																				${friend.getHoTen()} </a>
-																		</h4>
-																		<!-- Các thẻ HTML khác -->
-																	<a href="#" title="" class="add-butn" style="background-color:#5590ad">Hủy kết bạn</a>
-																	</div>
-																</div>
-															</li>
-														</c:forEach>
 
+ 
+        
+            <c:forEach var="item" items="${sessionScope.arrayList_TaiKhoans_SauKhiTimKiem}">
+               										 	<li>
+															<div class="nearly-pepls">
+																<figure>
+																	<a href="time-line.html" title=""><img
+																		src="${item.anhDaiDien}" alt=""></a>
+																</figure>
+																<div class="pepl-info">
+																	<h4>
+																		<a href="time-line.html" title=""> <c:out value="${item.hoTen}" /></a>
+																	</h4>
+																	<span>${item.status}</span> <a href="#" title=""
+																		class="add-butn more-action" data-ripple="">unfriend</a>
+																	<a href="#" title="" class="add-butn" data-ripple="">add
+																		friend</a>
+																</div>
+															</div>
+														</li>
+            </c:forEach>
+        				
+														
+														<!-- <li>
+															<div class="nearly-pepls">
+																<figure>
+																	<a href="time-line.html" title=""><img
+																		src="images/resources/nearly3.jpg" alt=""></a>
+																</figure>
+																<div class="pepl-info">
+																	<h4>
+																		<a href="time-line.html" title="">Sexy cat</a>
+																	</h4>
+																	<span>Student</span> <a href="#" title=""
+																		class="add-butn more-action" data-ripple="">unfriend</a>
+																	<a href="#" title="" class="add-butn" data-ripple="">add
+																		friend</a>
+																</div>
+															</div>
+														</li> -->
+														
 													</ul>
+													</c:if>
 													<div class="lodmore">
 														<button class="btn-view btn-load-more"></button>
 													</div>
 												</div>
-											</div>
-											<div class="chat-box">
-												<div class="chat-head">
-													<span class="status f-online"></span>
-													<h6>Bucky Barnes</h6>
-													<div class="more">
-														<span><i class="ti-more-alt"></i></span> <span
-															class="close-mesage"><i class="ti-close"></i></span>
-													</div>
-												</div>
-												<div class="chat-list">
-													<ul>
-														<li class="me">
-															<div class="chat-thumb">
-																<img src="images/resources/chatlist1.jpg" alt="">
-															</div>
-															<div class="notification-event">
-																<span class="chat-message-item"> Hi James! Please
-																	remember to buy the food for tomorrow! I’m gonna be
-																	handling the gifts and Jake’s gonna get the drinks </span> <span
-																	class="notification-date"><time
-																		datetime="2004-07-24T18:18" class="entry-date updated">Yesterday
-																		at 8:10pm</time></span>
+												<div class="tab-pane fade" id="frends-req">
+													<ul class="nearby-contct">
+														<li>
+															<div class="nearly-pepls">
+																<figure>
+																	<a href="time-line.html" title=""><img
+																		src="images/resources/nearly5.jpg" alt=""></a>
+																</figure>
+																<div class="pepl-info">
+																	<h4>
+																		<a href="time-line.html" title="">Amy watson</a>
+																	</h4>
+																	<span>ftv model</span> <a href="#" title=""
+																		class="add-butn more-action" data-ripple="">delete
+																		Request</a> <a href="#" title="" class="add-butn"
+																		data-ripple="">Confirm</a>
+																</div>
 															</div>
 														</li>
-														<li class="you">
-															<div class="chat-thumb">
-																<img src="images/resources/chatlist2.jpg" alt="">
-															</div>
-															<div class="notification-event">
-																<span class="chat-message-item"> Hi James! Please
-																	remember to buy the food for tomorrow! I’m gonna be
-																	handling the gifts and Jake’s gonna get the drinks </span> <span
-																	class="notification-date"><time
-																		datetime="2004-07-24T18:18" class="entry-date updated">Yesterday
-																		at 8:10pm</time></span>
+
+														<li>
+															<div class="nearly-pepls">
+																<figure>
+																	<a href="time-line.html" title=""><img
+																		src="images/resources/nearly1.jpg" alt=""></a>
+																</figure>
+																<div class="pepl-info">
+																	<h4>
+																		<a href="time-line.html" title="">sophia Gate</a>
+																	</h4>
+																	<span>ftv model</span> <a href="#" title=""
+																		class="add-butn more-action" data-ripple="">delete
+																		Request</a> <a href="#" title="" class="add-butn"
+																		data-ripple="">Confirm</a>
+																</div>
 															</div>
 														</li>
-														<li class="me">
-															<div class="chat-thumb">
-																<img src="images/resources/chatlist1.jpg" alt="">
+														<li>
+															<div class="nearly-pepls">
+																<figure>
+																	<a href="time-line.html" title=""><img
+																		src="images/resources/nearly6.jpg" alt=""></a>
+																</figure>
+																<div class="pepl-info">
+																	<h4>
+																		<a href="time-line.html" title="">caty lasbo</a>
+																	</h4>
+																	<span>ftv model</span> <a href="#" title=""
+																		class="add-butn more-action" data-ripple="">delete
+																		Request</a> <a href="#" title="" class="add-butn"
+																		data-ripple="">Confirm</a>
+																</div>
 															</div>
-															<div class="notification-event">
-																<span class="chat-message-item"> Hi James! Please
-																	remember to buy the food for tomorrow! I’m gonna be
-																	handling the gifts and Jake’s gonna get the drinks </span> <span
-																	class="notification-date"><time
-																		datetime="2004-07-24T18:18" class="entry-date updated">Yesterday
-																		at 8:10pm</time></span>
+														</li>
+														<li>
+															<div class="nearly-pepls">
+																<figure>
+																	<a href="time-line.html" title=""><img
+																		src="images/resources/friend-avatar9.jpg" alt=""></a>
+																</figure>
+																<div class="pepl-info">
+																	<h4>
+																		<a href="time-line.html" title="">jhon kates</a>
+																	</h4>
+																	<span>ftv model</span> <a href="#" title=""
+																		class="add-butn more-action" data-ripple="">delete
+																		Request</a> <a href="#" title="" class="add-butn"
+																		data-ripple="">Confirm</a>
+																</div>
+															</div>
+														</li>
+														<li>
+															<div class="nearly-pepls">
+																<figure>
+																	<a href="time-line.html" title=""><img
+																		src="images/resources/nearly2.jpg" alt=""></a>
+																</figure>
+																<div class="pepl-info">
+																	<h4>
+																		<a href="time-line.html" title="">sara grey</a>
+																	</h4>
+																	<span>ftv model</span> <a href="#" title=""
+																		class="add-butn more-action" data-ripple="">delete
+																		Request</a> <a href="#" title="" class="add-butn"
+																		data-ripple="">Confirm</a>
+																</div>
+															</div>
+														</li>
+														<li>
+															<div class="nearly-pepls">
+																<figure>
+																	<a href="time-line.html" title=""><img
+																		src="images/resources/nearly4.jpg" alt=""></a>
+																</figure>
+																<div class="pepl-info">
+																	<h4>
+																		<a href="time-line.html" title="">Sara grey</a>
+																	</h4>
+																	<span>ftv model</span> <a href="#" title=""
+																		class="add-butn more-action" data-ripple="">delete
+																		Request</a> <a href="#" title="" class="add-butn"
+																		data-ripple="">Confirm</a>
+																</div>
+															</div>
+														</li>
+														<li>
+															<div class="nearly-pepls">
+																<figure>
+																	<a href="time-line.html" title=""><img
+																		src="images/resources/nearly3.jpg" alt=""></a>
+																</figure>
+																<div class="pepl-info">
+																	<h4>
+																		<a href="time-line.html" title="">Sexy cat</a>
+																	</h4>
+																	<span>ftv model</span> <a href="#" title=""
+																		class="add-butn more-action" data-ripple="">delete
+																		Request</a> <a href="#" title="" class="add-butn"
+																		data-ripple="">Confirm</a>
+																</div>
+															</div>
+														</li>
+														<li>
+															<div class="nearly-pepls">
+																<figure>
+																	<a href="time-line.html" title=""><img
+																		src="images/resources/friend-avatar9.jpg" alt=""></a>
+																</figure>
+																<div class="pepl-info">
+																	<h4>
+																		<a href="time-line.html" title="">jhon kates</a>
+																	</h4>
+																	<span>ftv model</span> <a href="#" title=""
+																		class="add-butn more-action" data-ripple="">delete
+																		Request</a> <a href="#" title="" class="add-butn"
+																		data-ripple="">Confirm</a>
+																</div>
 															</div>
 														</li>
 													</ul>
-													<form class="text-box">
-														<textarea placeholder="Post enter to post..."></textarea>
-														<div class="add-smiles">
-															<span title="add icon" class="em em-expressionless"></span>
-														</div>
-														<div class="smiles-bunch">
-															<i class="em em---1"></i> <i class="em em-smiley"></i> <i
-																class="em em-anguished"></i> <i class="em em-laughing"></i>
-															<i class="em em-angry"></i> <i class="em em-astonished"></i>
-															<i class="em em-blush"></i> <i class="em em-disappointed"></i>
-															<i class="em em-worried"></i> <i
-																class="em em-kissing_heart"></i> <i class="em em-rage"></i>
-															<i class="em em-stuck_out_tongue"></i>
-														</div>
-														<button type="submit"></button>
-													</form>
+													<button class="btn-view btn-load-more"></button>
 												</div>
 											</div>
 										</div>
-										<!-- friends list sidebar -->
-
-										</aside>
 									</div>
-									<!-- sidebar -->
 								</div>
+								<!-- centerl meta -->
+
 							</div>
 						</div>
 					</div>
 				</div>
+			</div>
 		</section>
 
 		<footer>
@@ -485,7 +528,7 @@
 	</div>
 	<div class="side-panel"></div>
 	<!-- side panel -->
-
+	
 	<script data-cfasync="false"
 		src="../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
 	<script src="js/main.min.js"></script>

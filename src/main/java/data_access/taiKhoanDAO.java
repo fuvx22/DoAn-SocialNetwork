@@ -186,36 +186,33 @@ public class taiKhoanDAO implements IDataAccess<taiKhoan> {
 	}
 
 	@Override
-	public ArrayList<taiKhoan> selectAll() {
-		ArrayList<taiKhoan> listTaiKhoans = new ArrayList<taiKhoan>();;
-		Connection connection = null;
-		try {
-			connection = JDBCUtil.getConnection();
-			String sql = "SELECT * FROM taikhoan";
-			PreparedStatement st = connection.prepareStatement(sql);
-			ResultSet rs = st.executeQuery();
-			
-			while (rs.next()) {
-				//int id = rs.getInt("id");
-				//String taiKhoan = rs.getString("taiKhoan");
-				//String matKhau = rs.getString("matKhau");
-				//String anhDaiDien = rs.getString("anhDaiDien");
-				//String hoTen = rs.getString("hoTen");
-				//String diaChi = rs.getString("diaChi");
-				//String email = rs.getString("diaChi");
-				//String soDienThoai = rs.getString("soDienThoai");
-				//String status = rs.getString("status");
-				//boolean gioiTinh = rs.getBoolean("gioiTnh");
-				
-				//taiKhoan tk = new taiKhoan(taiKhoan);
-			}
-			
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-		
-		return null;
-	}
+	 public ArrayList<taiKhoan> selectAll() {
+	  // TODO Auto-generated method stub
+	  ArrayList<taiKhoan> taiKhoans = new ArrayList<taiKhoan>();
+	  Connection con = JDBCUtil.getConnection();
+
+	  try {
+	   String sql = "SELECT * FROM taikhoan;";
+
+	   PreparedStatement st = con.prepareStatement(sql);
+
+	   ResultSet rs = st.executeQuery();
+
+	   while (rs.next()) {
+	    taiKhoan taikhoan = new taiKhoan(rs.getInt("id"), rs.getString("taiKhoan"), rs.getString("anhDaiDien"),
+	      rs.getString("hoTen"), rs.getBoolean("gioiTinh"), rs.getString("diaChi"), rs.getString("email"),
+	      rs.getString("soDienThoai"), rs.getString("status"));
+	    taiKhoans.add(taikhoan);
+	   }
+
+	   JDBCUtil.closeConnection(con);
+	   return taiKhoans;
+	  } catch (SQLException e) {
+	   e.printStackTrace();
+	  }
+	  JDBCUtil.closeConnection(con);
+	  return taiKhoans;
+	 }
 
 	
 	

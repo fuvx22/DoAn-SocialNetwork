@@ -64,13 +64,29 @@
 					<li><a href="#" title="Home" data-ripple=""><i
 							class="ti-search"></i></a>
 						<div class="searched">
-							<form method="post" class="form-search">
-								<input type="text" placeholder="Search Friend">
-								<button data-ripple>
+							<form method="post" class="form-search" id="searchForm" action="/DoAn-SocialNetwork/search-friends">
+							
+								<input type="text" placeholder="Search Users" name="keyWord" required>
+								
+								<button type="button" onclick="submitSearchForm()">
 									<i class="ti-search"></i>
 								</button>
+							<script type="text/javascript">
+								function submitSearchForm() {
+									var form = document.getElementById("searchForm");
+									var input = document.querySelector('input[name="keyWord"]');
+									
+									if(input.value.length < 1){
+										input.placeholder = "Please type something to find!"
+										return;
+									}
+									
+								    form.submit();
+								}
+							</script>
 							</form>
-						</div></li>
+						</div>
+					</li>
 					<li><a href="newsfeed.html" title="Home" data-ripple=""><i
 							class="ti-home"></i></a></li>
 					<li><a href="#" title="Notification" data-ripple=""> <i
@@ -214,7 +230,7 @@
 
 												<li><i class="ti-files"></i> <a href="my-page.jsp"
 													title="">My pages</a></li>
-												<li><i class="ti-user"></i> <a href="friends.jsp"
+												<li><i class="ti-user"></i> <a href="/DoAn-SocialNetwork/controller/friend-servlet" 
 													title="">Friends</a></li>
 												<li><i class="ti-image"></i> <a href="photos.jsp"
 													title="">Images</a></li>
@@ -915,7 +931,7 @@
 											<div id="searchDir"></div>
 											<ul id="people-list" class="friendz-list">
 												<li>
-													<figure>
+													<figure>	
 														<img src="images/resources/friend-avatar.jpg" alt="">
 														<span class="status f-online"></span>
 													</figure>
